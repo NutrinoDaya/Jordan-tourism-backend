@@ -1,7 +1,7 @@
 // db.js
 import mongoose from "mongoose";
 
-const MONGO_URI= "mongodb+srv://grad_project_632:workout123456789@cluster0.wo9llcy.mongodb.net/?retryWrites=true&w=majority&tls=true&appName=Cluster0"
+const MONGO_URI = "mongodb+srv://aboodaldee:KYYq9AQ6glCEVErZ@cluster0.utxu1nj.mongodb.net/"
 const DB_NAME =  "tours_booking";
 
 mongoose.set("strictQuery", false);
