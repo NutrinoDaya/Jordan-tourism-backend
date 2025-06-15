@@ -1,4 +1,6 @@
 import Contact from "../models/Contact.js";
+import User from '../models/User.js'; // Import the User model
+import Booking from '../models/Booking.js'; // Import the Booking model
 
 export const createContact = async (req, res) => {
     const { name, email, phone, message } = req.body;
