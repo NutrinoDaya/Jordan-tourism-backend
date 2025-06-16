@@ -1,45 +1,39 @@
 import Review from "../models/Review.js";
 import Tour from "../models/Tour.js";
-
-// Create a new review
 export const createReview = async (req, res) => {
   const { username, rating, reviewText } = req.body;
   const { TourId } = req.params;
-  const userId = req.userId; 
-  
+
   if (!username || !rating || !reviewText) {
     return res.status(400).json({ message: "Username, rating, and reviewText are required fields" });
   }
 
   try {
-    // Check if the tour exists
     const tour = await Tour.findById(TourId);
     if (!tour) {
       return res.status(404).json({ message: "Tour not found" });
     }
 
-    // Create a new review
     const newReview = new Review({
       tour: tour._id,
-      username: username, // Replace with the actual username
+      username: username,
       reviewText: reviewText,
       rating,
     });
 
-    // Save the new review
     await newReview.save();
-
-    // Add the new review to the tour's reviews array
     tour.reviews.push(newReview);
-
     await tour.save();
 
-    res.status(201).json({ message: "Review created successfully" });
+    // 🌟 FIX: Return the newly created review object
+    res.status(201).json(newReview);
+
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Failed to create review" });
   }
 };
+
 
 // Get all reviews for a tour
 export const getTourReviews = async (req, res) => {
