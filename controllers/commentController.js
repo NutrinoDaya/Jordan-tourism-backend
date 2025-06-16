@@ -4,8 +4,7 @@ import Blog from "../models/Blog.js";
 export const createComment = async (req, res) => {
   const { username, comment } = req.body;
   const { BlogId } = req.params;
-  const userId = req.userId; 
-  
+
   if (!username || !comment) {
     return res.status(400).json({ message: "Username and Comment are required fields" });
   }
@@ -16,21 +15,19 @@ export const createComment = async (req, res) => {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    // Create a new Comment
     const newComment = new Comment({
       blog: blog._id,
       username: username,
       comment: comment,
     });
 
-    // Save the new Comment
     await newComment.save();
 
     blog.comments.push(newComment);
-
     await blog.save();
 
-    res.status(201).json({ message: "Comment created successfully" });
+    // Return the newly created comment object
+    res.status(201).json(newComment);
 
   } catch (error) {
     console.error(error);
